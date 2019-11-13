@@ -13,6 +13,8 @@ import localizedStrings from "./localizedStrings";
 import Button from "@material-ui/core/Button";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
+import { push } from "connected-react-router";
+import { connect } from "react-redux";
 
 function Copyright() {
   return (
@@ -61,7 +63,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function App() {
+function App(props) {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -85,7 +87,13 @@ export default function App() {
       <Loader loading={useSelector(state => state.loader.loading)} />
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
+          <Typography
+            variant="h6"
+            className={classes.title}
+            onClick={() => {
+              props.push("/");
+            }}
+          >
             {localizedStrings.appTitle}
           </Typography>
           <Button color="inherit" onClick={handleMenu}>
@@ -117,14 +125,14 @@ export default function App() {
       </AppBar>
       <main className={classes.layout}>
         <Paper className={classes.paper}>
-          <Typography component="h1" variant="h4" align="center">
-            {localizedStrings.appTitle}
-          </Typography>
-
           <React.Fragment>
             <Switch>
-              <Route exact path="/" render={() => <NoteList />} />
               <Route path="/add" render={() => <NoteEditor />} />
+              <Route
+                path="/edit/:id"
+                render={({ match }) => <NoteEditor noteId={match.params.id} />}
+              />
+              <Route path="/" render={() => <NoteList />} />
             </Switch>
           </React.Fragment>
         </Paper>
@@ -133,3 +141,5 @@ export default function App() {
     </React.Fragment>
   );
 }
+
+export default connect(null, { push })(App);
