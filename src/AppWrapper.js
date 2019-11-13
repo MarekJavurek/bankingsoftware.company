@@ -15,8 +15,9 @@ class AppWrapper extends React.PureComponent {
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <CssBaseline />
-          <ThemeProvider theme={theme} />
-          <App />
+          <ThemeProvider theme={theme}>
+            <App />
+          </ThemeProvider>
         </ConnectedRouter>
       </Provider>
     );

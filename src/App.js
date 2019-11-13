@@ -116,7 +116,7 @@ function App(props) {
             onClose={handleClose}
           >
             {localizedStrings.getAvailableLanguages().map(lang => (
-              <MenuItem onClick={() => handleLanguageChange(lang)}>
+              <MenuItem key={lang} onClick={() => handleLanguageChange(lang)}>
                 {lang}
               </MenuItem>
             ))}
