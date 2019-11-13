@@ -1,6 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Paper from "@material-ui/core/Paper";
@@ -8,6 +7,8 @@ import Typography from "@material-ui/core/Typography";
 import NoteList from "./components/NoteList";
 import NoteEditor from "./components/NoteEditor";
 import { Route, Switch } from "react-router";
+import Loader from "./components/common/Loader";
+import { useSelector } from "react-redux";
 
 function Copyright() {
   return (
@@ -56,12 +57,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Checkout() {
+export default function App() {
   const classes = useStyles();
 
   return (
     <React.Fragment>
-      <CssBaseline />
+      <Loader loading={useSelector(state => state.loader.loading)} />
       <AppBar position="absolute" color="default" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" color="inherit" noWrap>

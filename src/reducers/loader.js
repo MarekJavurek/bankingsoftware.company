@@ -1,7 +1,7 @@
 import { PROGRESS, SUCCESS, ERROR } from "../constants/actionTypes";
 
 const initialState = {
-  loading: true,
+  loading: false,
   inProgressCounter: 0
 };
 
