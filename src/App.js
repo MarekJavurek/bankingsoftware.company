@@ -9,6 +9,10 @@ import NoteEditor from "./components/NoteEditor";
 import { Route, Switch } from "react-router";
 import Loader from "./components/common/Loader";
 import { useSelector } from "react-redux";
+import localizedStrings from "./localizedStrings";
+import Button from "@material-ui/core/Button";
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
 
 function Copyright() {
   return (
@@ -21,9 +25,6 @@ function Copyright() {
 }
 
 const useStyles = makeStyles(theme => ({
-  appBar: {
-    position: "relative"
-  },
   layout: {
     width: "auto",
     marginLeft: theme.spacing(2),
@@ -33,6 +34,9 @@ const useStyles = makeStyles(theme => ({
       marginLeft: "auto",
       marginRight: "auto"
     }
+  },
+  title: {
+    flexGrow: 1
   },
   paper: {
     marginTop: theme.spacing(3),
@@ -60,20 +64,61 @@ const useStyles = makeStyles(theme => ({
 export default function App() {
   const classes = useStyles();
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleMenu = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLanguageChange = lang => {
+    localizedStrings.setLanguage(lang);
+    handleClose();
+  };
+
   return (
     <React.Fragment>
       <Loader loading={useSelector(state => state.loader.loading)} />
-      <AppBar position="absolute" color="default" className={classes.appBar}>
+      <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            BSC
+          <Typography variant="h6" className={classes.title}>
+            {localizedStrings.appTitle}
           </Typography>
+          <Button color="inherit" onClick={handleMenu}>
+            {localizedStrings.changeLanguageButton}{" "}
+            {localizedStrings.getLanguage()}
+          </Button>
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right"
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right"
+            }}
+            open={open}
+            onClose={handleClose}
+          >
+            {localizedStrings.getAvailableLanguages().map(lang => (
+              <MenuItem onClick={() => handleLanguageChange(lang)}>
+                {lang}
+              </MenuItem>
+            ))}
+          </Menu>
         </Toolbar>
       </AppBar>
       <main className={classes.layout}>
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h4" align="center">
-            Notes App
+            {localizedStrings.appTitle}
           </Typography>
 
           <React.Fragment>
