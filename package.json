@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "cross-env PORT=9000 REACT_APP_ENV=local react-scripts start",
-    "test": "cross-env REACT_APP_ENV=local react-scripts test"
+    "test": "cross-env REACT_APP_ENV=local react-scripts test --watchAll"
   },
   "eslintConfig": {
     "extends": "react-app"
