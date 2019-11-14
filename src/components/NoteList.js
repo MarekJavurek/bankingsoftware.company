@@ -10,9 +10,9 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import VisibilityIcon from "@material-ui/icons/Visibility";
-import localizedStrings from "../localizedStrings";
 import { connect } from "react-redux";
 import { getAllNotes } from "../actions/noteActions";
+import { FormattedMessage } from "react-intl";
 
 const mapStateToProps = state => {
   return {
@@ -38,13 +38,13 @@ export class NoteList extends React.PureComponent {
     return (
       <React.Fragment>
         <Typography variant="h5" gutterBottom>
-          {localizedStrings.noteListTitle}
+          <FormattedMessage id="noteListTitle" />
         </Typography>
 
         <List dense={false}>
           {noteList.map(note => {
             return (
-              <ListItem key={note}>
+              <ListItem key={note.id}>
                 <ListItemAvatar>
                   <Avatar>{note.id}</Avatar>
                 </ListItemAvatar>
@@ -69,4 +69,9 @@ export class NoteList extends React.PureComponent {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NoteList);
+const ConnectedNoteList = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NoteList);
+
+export default ConnectedNoteList;
