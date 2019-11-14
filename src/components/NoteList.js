@@ -11,8 +11,11 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import { connect } from "react-redux";
-import { getAllNotes } from "../actions/noteActions";
+import { getAllNotes, deleteNote } from "../actions/noteActions";
 import { FormattedMessage } from "react-intl";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
+import { push } from "connected-react-router";
 
 const mapStateToProps = state => {
   return {
@@ -22,7 +25,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getAllNotes: () => dispatch(getAllNotes())
+    getAllNotes: () => dispatch(getAllNotes()),
+    deleteNote: id => dispatch(deleteNote(id)),
+    push: to => dispatch(push(to))
   };
 };
 
@@ -31,6 +36,14 @@ export class NoteList extends React.PureComponent {
     const { getAllNotes } = this.props;
     getAllNotes();
   }
+
+  displayNote = id => {};
+
+  editNote = id => {};
+
+  deleteNote = id => {
+    this.props.deleteNote(id);
+  };
 
   render() {
     const { noteList } = this.props;
@@ -50,13 +63,25 @@ export class NoteList extends React.PureComponent {
                 </ListItemAvatar>
                 <ListItemText primary={note.title} secondary={null} />
                 <ListItemSecondaryAction>
-                  <IconButton edge="end" aria-label="detail">
+                  <IconButton
+                    edge="end"
+                    aria-label="detail"
+                    onClick={() => this.displayNote(note.id)}
+                  >
                     <VisibilityIcon />
                   </IconButton>
-                  <IconButton edge="end" aria-label="edit">
+                  <IconButton
+                    edge="end"
+                    aria-label="edit"
+                    onClick={() => this.editNote(note.id)}
+                  >
                     <EditIcon />
                   </IconButton>
-                  <IconButton edge="end" aria-label="delete">
+                  <IconButton
+                    edge="end"
+                    aria-label="delete"
+                    onClick={() => this.deleteNote(note.id)}
+                  >
                     <DeleteIcon />
                   </IconButton>
                 </ListItemSecondaryAction>
@@ -64,6 +89,16 @@ export class NoteList extends React.PureComponent {
             );
           })}
         </List>
+        <Fab
+          variant="extended"
+          aria-label="like"
+          onClick={() => {
+            this.props.push("/add");
+          }}
+        >
+          <AddIcon />
+          Add New Note
+        </Fab>
       </React.Fragment>
     );
   }

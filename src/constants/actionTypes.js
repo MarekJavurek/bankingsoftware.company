@@ -11,3 +11,4 @@ export const SUCCESS = "SUCCESS";
 
 // notes list
 export const NOTES_LIST_LOAD = "NOTES_LIST_LOAD";
+export const NOTES_DELETE_NOTE = "NOTES_DELETE_NOTE";

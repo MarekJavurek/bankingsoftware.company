@@ -32,3 +32,35 @@ export function getAllNotes() {
     }
   };
 }
+
+export function deleteNote(id) {
+  return async function(dispatch) {
+    dispatch({
+      type: actionTypes.NOTES_DELETE_NOTE,
+      status: actionTypes.PROGRESS
+    });
+
+    const noteService = new NoteService();
+    try {
+      await noteService.deleteNote(id);
+
+      dispatch({
+        type: actionTypes.NOTES_DELETE_NOTE,
+        status: actionTypes.SUCCESS,
+        id
+      });
+
+      dispatch(globalAlert(`Note with ID: ${id} was deleted.`));
+    } catch (err) {
+      logger.warn(err);
+
+      dispatch({
+        type: actionTypes.NOTES_DELETE_NOTE,
+        status: actionTypes.ERROR,
+        message: "Can not delete note. Please try it again."
+      });
+
+      dispatch(globalAlert("Can not delete note. Please try it again."));
+    }
+  };
+}
