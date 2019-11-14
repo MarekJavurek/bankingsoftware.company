@@ -44,8 +44,6 @@ export class NoteList extends React.PureComponent {
   render() {
     const { noteId, note, readOnly, createNote, updateNote } = this.props;
 
-    debugger;
-
     return (
       <React.Fragment>
         <Typography variant="h5" gutterBottom>
@@ -61,6 +59,7 @@ export class NoteList extends React.PureComponent {
         </Typography>
 
         <Formik
+          enableReinitialize={true}
           initialValues={
             noteId && note ? { noteText: note.title } : { noteText: "" }
           }
@@ -107,7 +106,7 @@ export class NoteList extends React.PureComponent {
                         disabled={isSubmitting}
                         type="submit"
                       >
-                        Save Note
+                        <FormattedMessage id="saveNote" />
                       </Button>
                     </Grid>
                   </Grid>
