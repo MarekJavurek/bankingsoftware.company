@@ -15,6 +15,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import { push } from "connected-react-router";
 import { connect } from "react-redux";
+import GlobalAlert from "./components/common/GlobalAlert";
 
 function Copyright() {
   return (
@@ -124,6 +125,7 @@ function App(props) {
         </Toolbar>
       </AppBar>
       <main className={classes.layout}>
+        <GlobalAlert />
         <Paper className={classes.paper}>
           <React.Fragment>
             <Switch>
