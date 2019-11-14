@@ -4,5 +4,6 @@
   "noteListTitle": "Note List",
   "addNewNote": "Add New Note",
   "editNote": "Edit Note",
-  "viewNote": "View Note"
+  "viewNote": "View Note",
+  "saveNote": "Save Note"
 }

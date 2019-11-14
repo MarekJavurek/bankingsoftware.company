@@ -1,5 +1,9 @@
 {
   "appTitle": "BSC poznámková aplikace",
   "changeLanguageButton": "Změnit jazyk:",
-  "noteListTitle": "Seznam poznámek"
+  "noteListTitle": "Seznam poznámek",
+  "addNewNote": "Přidat novou poznámku",
+  "editNote": "Editace poznámky",
+  "viewNote": "Zobrazení poznámky",
+  "saveNote": "Uložit poznámku"
 }
