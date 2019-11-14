@@ -8,3 +8,6 @@ export const LOADING = "LOADING";
 export const ERROR = "ERROR";
 export const PROGRESS = "PROGRESS";
 export const SUCCESS = "SUCCESS";
+
+// notes list
+export const NOTES_LIST_LOAD = "NOTES_LIST_LOAD";
