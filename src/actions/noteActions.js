@@ -64,3 +64,98 @@ export function deleteNote(id) {
     }
   };
 }
+
+export function createNote(text) {
+  return async function(dispatch) {
+    dispatch({
+      type: actionTypes.NOTES_ADD_NOTE,
+      status: actionTypes.PROGRESS
+    });
+
+    const noteService = new NoteService();
+    try {
+      await noteService.createNote(text);
+
+      dispatch({
+        type: actionTypes.NOTES_ADD_NOTE,
+        status: actionTypes.SUCCESS,
+        text
+      });
+
+      dispatch(globalAlert(`Note was created.`));
+    } catch (err) {
+      logger.warn(err);
+
+      dispatch({
+        type: actionTypes.NOTES_ADD_NOTE,
+        status: actionTypes.ERROR,
+        message: "Can not create note. Please try it again."
+      });
+
+      dispatch(globalAlert("Can not create note. Please try it again."));
+    }
+  };
+}
+
+export function updateNote(id, text) {
+  return async function(dispatch) {
+    dispatch({
+      type: actionTypes.NOTES_EDIT_NOTE,
+      status: actionTypes.PROGRESS
+    });
+
+    const noteService = new NoteService();
+    try {
+      await noteService.updateNote(id, text);
+
+      dispatch({
+        type: actionTypes.NOTES_EDIT_NOTE,
+        status: actionTypes.SUCCESS,
+        id,
+        text
+      });
+
+      dispatch(globalAlert(`Note was updated.`));
+    } catch (err) {
+      logger.warn(err);
+
+      dispatch({
+        type: actionTypes.NOTES_EDIT_NOTE,
+        status: actionTypes.ERROR,
+        message: "Can not update note. Please try it again."
+      });
+
+      dispatch(globalAlert("Can not update note. Please try it again."));
+    }
+  };
+}
+
+export function getNoteById(id) {
+  return async function(dispatch) {
+    dispatch({
+      type: actionTypes.NOTES_VIEW_NOTE,
+      status: actionTypes.PROGRESS
+    });
+
+    const noteService = new NoteService();
+    try {
+      await noteService.getNoteById(id);
+
+      dispatch({
+        type: actionTypes.NOTES_VIEW_NOTE,
+        status: actionTypes.SUCCESS,
+        id
+      });
+    } catch (err) {
+      logger.warn(err);
+
+      dispatch({
+        type: actionTypes.NOTES_VIEW_NOTE,
+        status: actionTypes.ERROR,
+        message: "Can not load note. Please try it again."
+      });
+
+      dispatch(globalAlert("Can not load note. Please try it again."));
+    }
+  };
+}

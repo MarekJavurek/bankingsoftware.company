@@ -110,6 +110,12 @@ export class App extends React.PureComponent {
                     <NoteEditor noteId={match.params.id} />
                   )}
                 />
+                <Route
+                  path="/view/:id"
+                  render={({ match }) => (
+                    <NoteEditor noteId={match.params.id} readonly />
+                  )}
+                />
                 <Route path="/" render={() => <NoteList />} />
               </Switch>
             </React.Fragment>

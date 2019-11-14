@@ -37,9 +37,13 @@ export class NoteList extends React.PureComponent {
     getAllNotes();
   }
 
-  displayNote = id => {};
+  displayNote = id => {
+    this.props.push(`/view/${id}`);
+  };
 
-  editNote = id => {};
+  editNote = id => {
+    this.props.push(`/edit/${id}`);
+  };
 
   deleteNote = id => {
     this.props.deleteNote(id);
@@ -97,7 +101,7 @@ export class NoteList extends React.PureComponent {
           }}
         >
           <AddIcon />
-          Add New Note
+          <FormattedMessage id="addNewNote" />
         </Fab>
       </React.Fragment>
     );
