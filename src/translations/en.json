@@ -3,5 +3,6 @@
   "changeLanguageButton": "Change language:",
   "noteListTitle": "Note List",
   "addNewNote": "Add New Note",
-  "editNote": "Edit Note"
+  "editNote": "Edit Note",
+  "viewNote": "View Note"
 }

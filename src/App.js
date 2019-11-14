@@ -113,7 +113,7 @@ export class App extends React.PureComponent {
                 <Route
                   path="/view/:id"
                   render={({ match }) => (
-                    <NoteEditor noteId={match.params.id} readonly />
+                    <NoteEditor noteId={match.params.id} readOnly />
                   )}
                 />
                 <Route path="/" render={() => <NoteList />} />

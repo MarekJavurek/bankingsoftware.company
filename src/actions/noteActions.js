@@ -2,6 +2,7 @@ import * as actionTypes from "../constants/actionTypes";
 import NoteService from "../services/NoteService";
 import { globalAlert } from "./globalAlertActions";
 import logger from "../utils/logger";
+import { push } from "connected-react-router";
 
 export function getAllNotes() {
   return async function(dispatch) {
@@ -76,23 +77,25 @@ export function createNote(text) {
     try {
       await noteService.createNote(text);
 
-      dispatch({
+      dispatch(globalAlert(`Note was created.`));
+
+      dispatch(push("/"));
+
+      return dispatch({
         type: actionTypes.NOTES_ADD_NOTE,
         status: actionTypes.SUCCESS,
         text
       });
-
-      dispatch(globalAlert(`Note was created.`));
     } catch (err) {
       logger.warn(err);
 
-      dispatch({
+      dispatch(globalAlert("Can not create note. Please try it again."));
+
+      return dispatch({
         type: actionTypes.NOTES_ADD_NOTE,
         status: actionTypes.ERROR,
         message: "Can not create note. Please try it again."
       });
-
-      dispatch(globalAlert("Can not create note. Please try it again."));
     }
   };
 }
@@ -108,24 +111,26 @@ export function updateNote(id, text) {
     try {
       await noteService.updateNote(id, text);
 
-      dispatch({
+      dispatch(globalAlert(`Note was updated.`));
+
+      dispatch(push("/"));
+
+      return dispatch({
         type: actionTypes.NOTES_EDIT_NOTE,
         status: actionTypes.SUCCESS,
         id,
         text
       });
-
-      dispatch(globalAlert(`Note was updated.`));
     } catch (err) {
       logger.warn(err);
 
-      dispatch({
+      dispatch(globalAlert("Can not update note. Please try it again."));
+
+      return dispatch({
         type: actionTypes.NOTES_EDIT_NOTE,
         status: actionTypes.ERROR,
         message: "Can not update note. Please try it again."
       });
-
-      dispatch(globalAlert("Can not update note. Please try it again."));
     }
   };
 }
@@ -139,11 +144,12 @@ export function getNoteById(id) {
 
     const noteService = new NoteService();
     try {
-      await noteService.getNoteById(id);
+      let note = await noteService.getNoteById(id);
 
       dispatch({
         type: actionTypes.NOTES_VIEW_NOTE,
         status: actionTypes.SUCCESS,
+        note,
         id
       });
     } catch (err) {
